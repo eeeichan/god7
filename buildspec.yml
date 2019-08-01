@@ -30,7 +30,7 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Distributing to S3...
-      - aws s3 sync dist/develop s3://god7-bucket --delete --acl public-read
+      - $(aws s3 sync dist/develop s3://god7-bucket --delete --acl public-read)
 artifacts:
   files:
     - dist/develop/**/*
