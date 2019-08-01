@@ -25,12 +25,12 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Compiling the Node.js code
-      - yarn run build
+      - yarn build
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Distributing to S3...
-      - $(aws s3 sync dist/develop s3://god7-bucket --delete --acl public-read)
+      - yarn deploy
 artifacts:
   files:
     - dist/develop/**/*
