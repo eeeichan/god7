@@ -2,23 +2,33 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      nodejs: 8
+    commands:
+      - echo update npm...
+      - npm install -g n
+      - n latest
+      - npm update -g npm
+      - echo node -v
+      - node -v
+      - echo npm -v
+      - npm -v
+      - echo install yarn...
+      - npm install -g yarn
+      - echo yarn -v
+      - yarn -v
   pre_build:
     commands:
-      - if [ -e /tmp/node_modules.tar ]; then tar xf /tmp/node_modules.tar; fi
+      - echo Installing source NPM dependencies...
       - yarn install
   build:
     commands:
-      - yarn build
+      - echo Build started on `date`
+      - echo Compiling the Node.js code
+      - yarn run build
   post_build:
     commands:
-      - aws s3 sync --delete build/ s3://god7-bucket.s3-website-ap-northeast-1.amazonaws.com --acl public-read
-      - tar cf /tmp/node_modules.tar node_modules
+      - echo Build completed on `date`
+      - echo Distributing to S3...
+      - aws s3 sync dist/develop s3://god7-bucket --delete --acl public-read
 artifacts:
   files:
-    - '**/*'
-  base-directory: build
-cache:
-  paths:
-    - /tmp/node_modules.tar
+    - dist/develop/**/*
