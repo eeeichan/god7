@@ -33,4 +33,4 @@ phases:
       - yarn deploy
 artifacts:
   files:
-    - dist/develop/**/*
+    - '**/*'
