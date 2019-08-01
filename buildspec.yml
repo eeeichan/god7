@@ -13,6 +13,7 @@ phases:
       - yarn build
   post_build:
     commands:
+      - aws s3 sync --delete build/ s3://god7-bucket.s3-website-ap-northeast-1.amazonaws.com --acl public-read
       - tar cf /tmp/node_modules.tar node_modules
 artifacts:
   files:
