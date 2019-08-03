@@ -31,3 +31,18 @@
     transform: rotate(360deg);
   }
 }
+
+.card_list {
+  display: flex;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  width:50px;
+  height:100px;
+  background-color:white;
+}
+
