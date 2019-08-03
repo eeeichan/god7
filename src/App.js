@@ -53,25 +53,35 @@ class CardList extends React.Component {
 
   openCheck = (card, index) => {
     let openedCard = this.state.select_card
-    if(openedCard.indexOf(card) != '-1') {
-      alert("Out");
-      this.setState({ card_value: '0' });
-      this.setState({ select_card: [] });
-      this.setState({ check_cards:  ['1','2','3','4','5','6','7'] });
+    if(openedCard.length == 6) {
+      alert("正解！");
+    }else if(openedCard.indexOf(card) != '-1') {
+      alert("不正解！");
+      window.location.reload();
+      //this.setState({ card_value: '0' });
+      //this.setState({ select_card: [] });
+      //this.setState({ check_cards:  ['1','2','3','4','5','6','7'] });
     }else{
-      //const safe_cards = Object.assign([], this.state.check_cards);
-      //safe_cards[index - 1] = "*";
-      //this.setState({ check_cards: safe_cards });
-      this.cardBlock(card, index);
+      this.cardBlock(openedCard, card, index);
     }
   }
 
-  cardBlock = (card, index) => {
+  cardBlock = (openedCard, card, index) => {
     let selectItem = document.getElementById("CardList").getElementsByTagName("button");
     for(let i = 0; i < selectItem.length; i++){
       selectItem[i].disabled = true;
     }
+    let select_cards = openedCard;
+    select_cards.push(card);
+    console.log(select_cards);
     selectItem[card - 1].disabled = false;
+    let target = selectItem[card - 1].innerHTML;
+    console.log(target)
+    if(select_cards.indexOf(target) != '-1'){
+      alert("不正解！！");
+      window.location.reload();
+    }
+    
   }
 
   render() {
@@ -80,7 +90,6 @@ class CardList extends React.Component {
         <div id="CardList" class="card_list">
           <CardSet cardClick={this.handleOnClick} cardList={this.state.check_cards} />
         </div>
-        <p>{this.state.select_card}</p>
       </div>
     );
   }
