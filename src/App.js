@@ -59,9 +59,9 @@ class CardList extends React.Component {
       this.setState({ select_card: [] });
       this.setState({ check_cards:  ['1','2','3','4','5','6','7'] });
     }else{
-      const safe_cards = Object.assign([], this.state.check_cards);
-      safe_cards[index - 1] = "*";
-      this.setState({ check_cards: safe_cards });
+      //const safe_cards = Object.assign([], this.state.check_cards);
+      //safe_cards[index - 1] = "*";
+      //this.setState({ check_cards: safe_cards });
       this.cardBlock(card, index);
     }
   }
@@ -80,7 +80,7 @@ class CardList extends React.Component {
         <div id="CardList" class="card_list">
           <CardSet cardClick={this.handleOnClick} cardList={this.state.check_cards} />
         </div>
-        <p>{this.state.check_cards}</p>
+        <p>{this.state.select_card}</p>
       </div>
     );
   }
