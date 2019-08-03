@@ -43,6 +43,14 @@ ul {
 li {
   width:50px;
   height:100px;
-  background-color:white;
+  background-color:rgba(255,255,255,0);
 }
 
+.cards {
+  border-radius: 5px;
+  background-color:rgba(55,55,55,.8);
+}
+.selectCard {
+  border-radius: 5px;
+  background-color: rgba(255,255,255,.7);
+}

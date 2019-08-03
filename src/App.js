@@ -62,6 +62,7 @@ class CardList extends React.Component {
     let openedCard = this.state.select_card
     if(openedCard.length == 6) {
       alert("正解！");
+      window.location.reload();
     }else if(openedCard.indexOf(card) != '-1') {
       alert("不正解！");
       window.location.reload();
@@ -77,11 +78,13 @@ class CardList extends React.Component {
     let selectItem = document.getElementById("CardList").getElementsByTagName("input");
     for(let i = 0; i < selectItem.length; i++){
       selectItem[i].disabled = true;
+      selectItem[i].className = "cards";
     }
     let select_cards = openedCard;
     select_cards.push(card);
     console.log(select_cards);
     selectItem[card - 1].disabled = false;
+    selectItem[card - 1].className = "selectCard";
     let target = selectItem[card - 1].value;
     console.log(target)
     if(select_cards.indexOf(target) != '-1'){
@@ -109,7 +112,9 @@ const CardSet = (props) => {
   //const card_li = ['1','2','3','4','5','6','7']
   const rows = card_li.map((card,index) =>
     <ul id="CardList" key={card}>
+      <li class={'isshow' + (card)}>
       <input type="image" src={TrampBack} onClick={() => props.cardClick(card, index)} value={card} width="70" height="100" />
+      </li>
     </ul>
   );
   return (
