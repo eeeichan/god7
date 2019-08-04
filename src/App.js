@@ -29,7 +29,8 @@ class CardList extends React.Component {
       card_check: '0',
       card_value: '',
       select_card: [],
-      check_cards: ['1','2','3','4','5','6','7']
+      check_cards: ['1','2','3','4','5','6','7'],
+      result: ''
     }
   }
 
@@ -49,25 +50,29 @@ class CardList extends React.Component {
     this.setState({ check_cards: array});
   }
 
+  handleFunction = (card, index) => {
+    this.changeImage(card, index);
+    this.handleOnClick(card, index);
+  }
+
   handleOnClick = (e, index) => {
+    //this.changeImage(e, index);
 
     this.setState({card_value: e});
     const card = Object.assign([], this.state.select_card);
     card.push(e);
     this.setState({ select_card: card });
-    this.openCheck(e, index);
 
-    this.changeImage(e, index);
+    this.openCheck(e, index);
   }
 
   openCheck = (card, index) => {
     let openedCard = this.state.select_card
-    if(openedCard.length == 6) {
-      alert("正解！");
-      window.location.reload();
+    if(openedCard.length == 6 && openedCard.indexOf(card) == '-1') {
+      this.setState({result: '正解です！'});
     }else if(openedCard.indexOf(card) != '-1') {
-      alert("不正解！");
-      window.location.reload();
+      this.setState({result: '不正解です！'})
+      //window.location.reload();
       //this.setState({ card_value: '0' });
       //this.setState({ select_card: [] });
       //this.setState({ check_cards:  ['1','2','3','4','5','6','7'] });
@@ -100,9 +105,10 @@ class CardList extends React.Component {
 
 
     let target = selectItem[card - 1].value;
-    if(select_cards.indexOf(target) != '-1'){
-      alert("不正解！！");
-      window.location.reload();
+    let an_target = selectItem[(7 - card)].value;
+    if(select_cards.indexOf(target) != '-1' && select_cards.indexOf(an_target) != '-1'){
+      this.setState({result: '不正解です！'});
+    //  window.location.reload();
     }  
   }
 
@@ -116,8 +122,9 @@ class CardList extends React.Component {
     return (
       <div class="">
         <div id="CardList" class="card_list">
-          <CardSet cardClick={this.handleOnClick} cardList={this.state.check_cards} />
+          <CardSet cardClick={this.handleFunction} cardList={this.state.check_cards} />
         </div>
+        <h2>{this.state.result}</h2>
       </div>
     );
   }
