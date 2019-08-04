@@ -64,8 +64,73 @@ li {
   border-radius: 10px;
   font-size: 20px;
   background-color: #547cc5;
+  margin-bottom: 50px;
 }
 
 h1,h2,p,button {
   font-family: "M PLUS 1p";
+}
+
+.CardBox { width: 100%; }
+
+@media screen and (max-width:480px){
+  #CardList { padding-left:20px; }
+}
+@media screen and (max-width:781px){
+  #CardList { padding-left:20px; }
+}
+
+/* popup */
+.popup {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: .6s;
+}
+.popup.is-show {
+  opacity: 1;
+  visibility: visible;
+}
+.popup-inner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  width: 80%;
+  max-width: 600px;
+  padding: 50px;
+  background-color: #fff;
+  z-index: 2;
+}
+.popup-inner img {
+  width: 100%;
+}
+.close-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  cursor: pointer;
+}
+.close-btn i {
+  font-size: 20px;
+  color: #333;
+}
+.black-background {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.8);
+  z-index: 1;
+  cursor: pointer;
 }
