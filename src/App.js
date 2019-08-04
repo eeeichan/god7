@@ -1,6 +1,21 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Modal from 'react-modal';
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
+
+// Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
+//Modal.setAppElement('#App')
 
 
 function App() {
@@ -26,18 +41,66 @@ class CardList extends React.Component {
       card_value: '',
       select_card: [],
       check_cards: ['1','2','3','4','5','6','7'],
-      result: ''
+      result: '',
+      modalIsOpen: false
     }
+
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    window.addEventListener("orientationchange", function() {
+        let orientation = window.orientation;
+    
+        if (orientation === 0) {
+            /*  縦画面時の処理  */
+           var popup = document.getElementById('js-popup');
+           if(!popup) return;
+           popup.classList.add('is-show');
+        } else {
+            let popup = document.getElementById('js-popup');
+            popup.classList.remove('is-show');
+        }
+    });
   }
+    openModal() {
+    this.setState({modalIsOpen: true});
+  }
+
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    this.subtitle.style.color = '#f00';
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
+  }
+
 
   // start setting...
   componentWillMount(){
+    this.pageCheck();
     this.shuffleCards();
+  }
+  
+  // Vertical or Side
+  pageCheck = () => {
+    //画面の向きを 0,90,180,-90 のいずれかで取得
+    let orientation = window.orientation;
+
+    window.onload = function(){
+      if (orientation === 0) {
+          /*  縦画面時の処理  */
+          const  popup = document.getElementById('js-popup');
+          if(!popup) return;
+          popup.classList.add('is-show');
+      } else {
+          /*  横画面時の処理  */
+      }
+    }
   }
 
   //state reset...
   stateReset = () => {
-    console.log("state reset handle now...");
     this.setState({select_card: []});
     this.setState({check_cards: []});
     this.setState({result: ''});
@@ -71,8 +134,6 @@ class CardList extends React.Component {
   }
 
   handleOnClick = (e, index) => {
-    //this.changeImage(e, index);
-
     this.setState({card_value: e});
     const card = Object.assign([], this.state.select_card);
     card.push(e);
@@ -87,10 +148,6 @@ class CardList extends React.Component {
       this.setState({result: '正解です！'});
     }else if(openedCard.indexOf(card) != '-1') {
       this.setState({result: '不正解です！'})
-      //window.location.reload();
-      //this.setState({ card_value: '0' });
-      //this.setState({ select_card: [] });
-      //this.setState({ check_cards:  ['1','2','3','4','5','6','7'] });
     }else{
       this.cardBlock(openedCard, card, index);
     }
@@ -129,13 +186,28 @@ class CardList extends React.Component {
 
   changeImage = (card, index) => {
     let selectItem = document.getElementById("CardList").getElementsByTagName("input");
-    console.log(selectItem[index].src);
     selectItem[index].src = "/images/ace0" + card + ".gif";
   }
 
   render() {
     return (
-      <div class="">
+      <div class="CardBox">
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
+        </Modal>
+        <div class="popup" id="js-popup">
+          <div class="popup-inner">
+            <a href="#"><img src={process.env.PUBLIC_URL +"/images/phone.png"} alt="ポップアップ画像" /></a>
+          </div>
+          <div class="black-background" id="js-black-bg"></div>
+        </div>
+
         <div id="CardList" class="card_list">
           <CardSet cardClick={this.handleFunction} cardList={this.state.check_cards} />
         </div>
@@ -149,8 +221,6 @@ class CardList extends React.Component {
 const CardSet = (props) => {
   
   const card_li = props.cardList;
-  console.log(card_li);
-  //const card_li = ['1','2','3','4','5','6','7']
   const rows = card_li.map((card,index) =>
     <ul id="CardList" key={card}>
       <li class={'isshow' + (card)}>
@@ -163,13 +233,14 @@ const CardSet = (props) => {
   )
 }
 
+
 const Reset = (props) => {
-  console.log(props);
   return(
     <div class="reset-button-div">
       <button onClick={props.stateReset} class="reset-button">
         もう一度遊ぶ
       </button>
+    <div id="header-line"></div>
     </div>
   );
 }
