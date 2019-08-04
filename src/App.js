@@ -1,20 +1,16 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-//import ace01 from './images/ace01.gif';
-//import ace02 from './images/ace02.gif';
-//import ace03 from './images/ace03.gif';
-//import ace04 from './images/ace04.gif';
-//import ace05 from'./images/ace05.gif';
-//import ace06 from './images/ace06.gif';
-//import ace07 from './images/ace07.gif';
-//import TrampBack from'./images/tramp_back.png';
+
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Card</h1>
+        <h1>オープン７</h1>
+        <p>オープン7とは...<br />
+        めくったカードの数字位置を左右から選択してめくっていくゲームだよ！<br />
+        最後までめくれたら勝利！！さあ、挑戦してみよう！</p>
         <CardList />
       </header>
     </div>
@@ -37,6 +33,25 @@ class CardList extends React.Component {
   // start setting...
   componentWillMount(){
     this.shuffleCards();
+  }
+
+  //state reset...
+  stateReset = () => {
+    console.log("state reset handle now...");
+    this.setState({select_card: []});
+    this.setState({check_cards: []});
+    this.setState({result: ''});
+    this.shuffleCards();
+    this.cardsReset();
+  }
+
+  cardsReset = () => {
+    let cards = document.getElementById("CardList").getElementsByTagName("input");
+    for(let i = 0; i < cards.length; i++){
+      cards[i].disabled = false;
+      cards[i].className = "cards";
+      cards[i].src = "/images/tramp_back.png";
+    }
   }
 
   shuffleCards = () => {
@@ -125,6 +140,7 @@ class CardList extends React.Component {
           <CardSet cardClick={this.handleFunction} cardList={this.state.check_cards} />
         </div>
         <h2>{this.state.result}</h2>
+        {this.state.result != '' ? <Reset stateReset={this.stateReset} /> : ''}
       </div>
     );
   }
@@ -145,6 +161,17 @@ const CardSet = (props) => {
   return (
     rows
   )
+}
+
+const Reset = (props) => {
+  console.log(props);
+  return(
+    <div class="reset-button-div">
+      <button onClick={props.stateReset} class="reset-button">
+        もう一度遊ぶ
+      </button>
+    </div>
+  );
 }
 
 
