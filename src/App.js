@@ -33,7 +33,7 @@ class CardList extends React.Component {
     }
   }
 
-  // shuffle numbering...
+  // start setting...
   componentWillMount(){
     this.shuffleCards();
   }
@@ -84,8 +84,20 @@ class CardList extends React.Component {
     }
     let select_cards = openedCard;
     select_cards.push(card);
-    selectItem[card - 1].disabled = false;
-    selectItem[card - 1].className = "selectCard";
+
+    if(card == 4) {
+      selectItem[3].disabled = false;
+      selectItem[3].className = "selectCard";
+    } else {
+      //left select
+      selectItem[card - 1].disabled = false;
+      selectItem[card - 1].className = "selectCard";
+
+      //right select
+      selectItem[7 - card].disabled = false;
+      selectItem[7 - card].className = "selectCard";
+    }
+
 
     let target = selectItem[card - 1].value;
     if(select_cards.indexOf(target) != '-1'){
