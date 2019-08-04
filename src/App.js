@@ -1,14 +1,14 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import ace01 from './images/ace01.gif';
-import ace02 from './images/ace02.gif';
-import ace03 from './images/ace03.gif';
-import ace04 from './images/ace04.gif';
-import ace05 from'./images/ace05.gif';
-import ace06 from './images/ace06.gif';
-import ace07 from './images/ace07.gif';
-import TrampBack from'./images/tramp_back.png';
+//import ace01 from './images/ace01.gif';
+//import ace02 from './images/ace02.gif';
+//import ace03 from './images/ace03.gif';
+//import ace04 from './images/ace04.gif';
+//import ace05 from'./images/ace05.gif';
+//import ace06 from './images/ace06.gif';
+//import ace07 from './images/ace07.gif';
+//import TrampBack from'./images/tramp_back.png';
 
 function App() {
   return (
@@ -56,6 +56,8 @@ class CardList extends React.Component {
     card.push(e);
     this.setState({ select_card: card });
     this.openCheck(e, index);
+
+    this.changeImage(e, index);
   }
 
   openCheck = (card, index) => {
@@ -82,16 +84,20 @@ class CardList extends React.Component {
     }
     let select_cards = openedCard;
     select_cards.push(card);
-    console.log(select_cards);
     selectItem[card - 1].disabled = false;
     selectItem[card - 1].className = "selectCard";
+
     let target = selectItem[card - 1].value;
-    console.log(target)
     if(select_cards.indexOf(target) != '-1'){
       alert("不正解！！");
       window.location.reload();
-    }
-    
+    }  
+  }
+
+  changeImage = (card, index) => {
+    let selectItem = document.getElementById("CardList").getElementsByTagName("input");
+    console.log(selectItem[index].src);
+    selectItem[index].src = "/images/ace0" + card + ".gif";
   }
 
   render() {
@@ -113,7 +119,7 @@ const CardSet = (props) => {
   const rows = card_li.map((card,index) =>
     <ul id="CardList" key={card}>
       <li class={'isshow' + (card)}>
-      <input type="image" src={TrampBack} onClick={() => props.cardClick(card, index)} value={card} width="70" height="100" />
+         <input type="image" src={process.env.PUBLIC_URL +'/images/tramp_back.png'} onClick={() => props.cardClick(card, index)} value={card} width="70" height="100" />
       </li>
     </ul>
   );
