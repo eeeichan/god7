@@ -66,3 +66,7 @@ li {
   background-color: #547cc5;
   font-family: monospace;
 }
+
+h1,p {
+  font-family: "M PLUS 1p";
+}
