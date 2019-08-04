@@ -64,9 +64,8 @@ li {
   border-radius: 10px;
   font-size: 20px;
   background-color: #547cc5;
-  font-family: monospace;
 }
 
-h1,p {
+h1,h2,p,button {
   font-family: "M PLUS 1p";
 }
