@@ -134,3 +134,9 @@ h1,h2,p,button {
   z-index: 1;
   cursor: pointer;
 }
+
+
+
+html{
+  scroll-behavior: smooth;
+}
