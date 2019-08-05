@@ -235,6 +235,7 @@ const CardSet = (props) => {
 
 
 const Reset = (props) => {
+  pageScroll();
   return(
     <div class="reset-button-div">
       <button onClick={props.stateReset} class="reset-button">
@@ -243,6 +244,12 @@ const Reset = (props) => {
     <div id="header-line"></div>
     </div>
   );
+}
+
+const pageScroll = () => {
+  let a = document.documentElement;
+  var y = a.scrollHeight - a.clientHeight;
+  setTimeout(function() { window.scrollBy(0, y + 100); }, 1);
 }
 
 
