@@ -209,7 +209,9 @@ class CardList extends React.Component {
         </div>
 
         <div id="CardList" class="card_list">
-          <CardSet cardClick={this.handleFunction} cardList={this.state.check_cards} />
+          <ul>
+            <CardSet cardClick={this.handleFunction} cardList={this.state.check_cards} />
+          </ul>
         </div>
         <h2>{this.state.result}</h2>
         {this.state.result != '' ? <Reset stateReset={this.stateReset} /> : ''}
@@ -222,11 +224,9 @@ const CardSet = (props) => {
   
   const card_li = props.cardList;
   const rows = card_li.map((card,index) =>
-    <ul id="CardList" key={card}>
-      <li class={'isshow' + (card)}>
+      <li class={'card' + (card)} key={card}>
          <input type="image" src={process.env.PUBLIC_URL +'/images/tramp_back.png'} onClick={() => props.cardClick(card, index)} value={card} width="70" height="100" />
       </li>
-    </ul>
   );
   return (
     rows
@@ -249,7 +249,7 @@ const Reset = (props) => {
 const pageScroll = () => {
   let a = document.documentElement;
   var y = a.scrollHeight - a.clientHeight;
-  setTimeout(function() { window.scrollBy(0, y + 100); }, 1);
+  setTimeout(function() { window.scrollBy(0, y + 300); }, 1);
 }
 
 
