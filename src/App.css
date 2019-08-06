@@ -50,7 +50,7 @@ ul {
   list-style-type: none;
   display: inline-flex;
   margin: 0 auto;
-  padding: 0; 
+  padding: 0;
 }
 
 li {
@@ -85,17 +85,13 @@ h1,h2,p,button {
 .CardBox { width: 100%; }
 
 @media screen and (max-width:480px){
-  #CardList { 
+  #CardList {
     display: flex;
-  }
-  .card1,.card2,.card3,.card4,.card5,.card6,.card7 {
   }
 }
 @media screen and (max-width:781px){
   #CardList {
     display: flex;
-  }
-  .card1,.card2,.card3,.card4,.card5,.card6,.card7 {
   }
 }
 
