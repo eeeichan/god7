@@ -119,7 +119,7 @@ class CardList extends React.Component {
 
   shuffleCards = () => {
     const array = Object.assign([], this.state.check_cards);
-    for(const i = array.length - 1; i > 0; i--){
+    for(let i = array.length - 1; i > 0; i--){
       const r = Math.floor(Math.random() * (i + 1));
       const tmp = array[i];
       array[i] = array[r];
