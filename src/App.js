@@ -50,7 +50,7 @@ class CardList extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     window.addEventListener("orientationchange", function() {
         let orientation = window.orientation;
-    
+
         if (orientation === 0) {
             /*  縦画面時の処理  */
            var popup = document.getElementById('js-popup');
@@ -81,7 +81,7 @@ class CardList extends React.Component {
     this.pageCheck();
     this.shuffleCards();
   }
-  
+
   // Vertical or Side
   pageCheck = () => {
     //画面の向きを 0,90,180,-90 のいずれかで取得
@@ -181,7 +181,7 @@ class CardList extends React.Component {
     if(select_cards.indexOf(target) != '-1' && select_cards.indexOf(an_target) != '-1'){
       this.setState({result: '不正解です！'});
     //  window.location.reload();
-    }  
+    }
   }
 
   changeImage = (card, index) => {
@@ -221,10 +221,10 @@ class CardList extends React.Component {
 }
 
 const CardSet = (props) => {
-  
+
   const card_li = props.cardList;
   const rows = card_li.map((card,index) =>
-      <li class={'card' + (card)} key={card}>
+      <li key={card}>
          <input type="image" src={process.env.PUBLIC_URL +'/images/tramp_back.png'} onClick={() => props.cardClick(card, index)} value={card} width="70" height="100" />
       </li>
   );
