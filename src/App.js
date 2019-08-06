@@ -53,7 +53,7 @@ class CardList extends React.Component {
 
         if (orientation === 0) {
             /*  縦画面時の処理  */
-           var popup = document.getElementById('js-popup');
+           const popup = document.getElementById('js-popup');
            if(!popup) return;
            popup.classList.add('is-show');
         } else {
@@ -119,9 +119,9 @@ class CardList extends React.Component {
 
   shuffleCards = () => {
     const array = Object.assign([], this.state.check_cards);
-    for(var i = array.length - 1; i > 0; i--){
-      var r = Math.floor(Math.random() * (i + 1));
-      var tmp = array[i];
+    for(const i = array.length - 1; i > 0; i--){
+      const r = Math.floor(Math.random() * (i + 1));
+      const tmp = array[i];
       array[i] = array[r];
       array[r] = tmp;
     }
@@ -248,7 +248,7 @@ const Reset = (props) => {
 
 const pageScroll = () => {
   let a = document.documentElement;
-  var y = a.scrollHeight - a.clientHeight;
+  const y = a.scrollHeight - a.clientHeight;
   setTimeout(function() { window.scrollBy(0, y + 300); }, 1);
 }
 
