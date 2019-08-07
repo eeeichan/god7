@@ -191,7 +191,7 @@ class CardList extends React.Component {
 
   render() {
     return (
-      <div class="CardBox">
+      <div className="CardBox">
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -201,14 +201,14 @@ class CardList extends React.Component {
         >
           <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
         </Modal>
-        <div class="popup" id="js-popup">
-          <div class="popup-inner">
+        <div className="popup" id="js-popup">
+          <div className="popup-inner">
             <a href="#"><img src={process.env.PUBLIC_URL +"/images/phone.png"} alt="ポップアップ画像" /></a>
           </div>
-          <div class="black-background" id="js-black-bg"></div>
+          <div className="black-background" id="js-black-bg"></div>
         </div>
 
-        <div id="CardList" class="card_list">
+        <div id="CardList" className="card_list">
           <ul>
             <CardSet cardClick={this.handleFunction} cardList={this.state.check_cards} />
           </ul>
@@ -237,8 +237,8 @@ const CardSet = (props) => {
 const Reset = (props) => {
   pageScroll();
   return(
-    <div class="reset-button-div">
-      <button onClick={props.stateReset} class="reset-button">
+    <div className="reset-button-div">
+      <button onClick={props.stateReset} className="reset-button">
         もう一度遊ぶ
       </button>
     <div id="header-line"></div>
