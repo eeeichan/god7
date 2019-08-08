@@ -155,3 +155,6 @@ h1,h2,p,button {
 html{
   scroll-behavior: smooth;
 }
+#CardList ul li .div-block input { display: none !important; }
+
+[hidden] {display: none!important;}
