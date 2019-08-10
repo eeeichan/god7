@@ -150,8 +150,10 @@ class CardList extends React.Component {
     let openedCard = this.state.select_card
     if(openedCard.length == 6 && openedCard.indexOf(card) == '-1') {
       this.setState({result: '正解です！'});
+      this.cardsAllBlock();
     }else if(openedCard.indexOf(card) != '-1') {
       this.setState({result: '不正解です！'})
+      this.cardsAllBlock();
     }else{
       this.cardBlock(openedCard, card, index);
     }
@@ -189,12 +191,22 @@ class CardList extends React.Component {
 
     if(select_cards.indexOf(target) != '-1' && select_cards.indexOf(an_target) != '-1'){
       this.setState({result: '不正解です！'});
+      this.cardsAllBlock();
     }
   }
 
   changeImage = (card, index) => {
     let selectItem = document.getElementById("CardList").getElementsByClassName("cardslist");
     selectItem[index].src = "/images/ace0" + card + ".gif";
+  }
+
+  cardsAllBlock = () => {
+    let selectItem = document.getElementById("CardList").getElementsByClassName("cardslist");
+    for(let i = 0; i < selectItem.length; i++){
+      selectItem[i].disabled = true;
+      selectItem[i].classList.remove("selectCard");
+      selectItem[i].classList.add("cards");
+    }
   }
 
   render() {
