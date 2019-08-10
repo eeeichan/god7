@@ -4,6 +4,8 @@ import './App.css';
 import Modal from 'react-modal';
 import CardSet from './components/CardSet';
 import Reset from './components/Reset';
+import Correct from './components/Correct';
+import Misstake from './components/Misstake';
 
 const customStyles = {
   content : {
@@ -43,7 +45,7 @@ class CardList extends React.Component {
       card_value: '',
       select_card: [],
       check_cards: ['1','2','3','4','5','6','7'],
-      result: '',
+      result: '0',
       modalIsOpen: false
     }
 
@@ -105,9 +107,10 @@ class CardList extends React.Component {
   stateReset = () => {
     this.setState({select_card: []});
     this.setState({check_cards: []});
-    this.setState({result: ''});
+    this.setState({result: '0'});
     this.shuffleCards();
     this.cardsReset();
+    this.closeModal();
   }
 
   cardsReset = () => {
@@ -149,11 +152,13 @@ class CardList extends React.Component {
   openCheck = (card, index) => {
     let openedCard = this.state.select_card
     if(openedCard.length == 6 && openedCard.indexOf(card) == '-1') {
-      this.setState({result: '正解です！'});
+      this.setState({result: '1'});
       this.cardsAllBlock();
+      this.openModal();
     }else if(openedCard.indexOf(card) != '-1') {
-      this.setState({result: '不正解です！'})
+      this.setState({result: '2'})
       this.cardsAllBlock();
+      this.openModal();
     }else{
       this.cardBlock(openedCard, card, index);
     }
@@ -190,8 +195,9 @@ class CardList extends React.Component {
     let an_target = array[7 - card];
 
     if(select_cards.indexOf(target) != '-1' && select_cards.indexOf(an_target) != '-1'){
-      this.setState({result: '不正解です！'});
+      this.setState({result: '2'});
       this.cardsAllBlock();
+      this.openModal();
     }
   }
 
@@ -219,7 +225,9 @@ class CardList extends React.Component {
           style={customStyles}
           contentLabel="Example Modal"
         >
-          <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
+          <h2 ref={subtitle => this.subtitle = subtitle}></h2>
+          {this.state.result == 1 ? <Correct /> : <Misstake />}
+          {this.state.result != '0' ? <Reset stateReset={this.stateReset} /> : ''}
         </Modal>
         <div className="popup" id="js-popup">
           <div className="popup-inner">
@@ -233,8 +241,7 @@ class CardList extends React.Component {
             <CardSet  cardClick={this.handleFunction} cardList={this.state.check_cards} />
           </ul>
         </div>
-        <h2>{this.state.result}</h2>
-        {this.state.result != '' ? <Reset stateReset={this.stateReset} /> : ''}
+          {this.state.result != '0' ? <Reset stateReset={this.stateReset} /> : ''}
       </div>
     );
   }

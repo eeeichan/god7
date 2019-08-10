@@ -68,6 +68,8 @@ li {
 }
 
 .reset-button-div {
+    text-align: center;
+    margin-top: 20px;
 }
 .reset-button {
   width: 180px;
@@ -75,7 +77,6 @@ li {
   border-radius: 10px;
   font-size: 20px;
   background-color: #547cc5;
-  margin-bottom: 50px;
 }
 
 h1,h2,p,button {
@@ -156,3 +157,9 @@ html{
   scroll-behavior: smooth;
 }
 
+.resultImg img {
+  width: 300px;
+  height: 130px;
+  margin-bottom: 10px;
+  border-radius:10px;
+}
