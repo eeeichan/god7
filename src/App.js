@@ -131,6 +131,7 @@ class CardList extends React.Component {
     this.setState({ check_cards: array});
   }
 
+
   handleFunction = (card, index) => {
     this.changeImage(card, index);
     this.handleOnClick(card, index);
@@ -158,7 +159,6 @@ class CardList extends React.Component {
 
   cardBlock = (openedCard, card, index) => {
     let selectItem = document.getElementById("CardList").getElementsByClassName("cardslist");
-    console.log(selectItem);
     for(let i = 0; i < selectItem.length; i++){
       selectItem[i].disabled = true;
       selectItem[i].classList.remove("selectCard");
@@ -183,14 +183,12 @@ class CardList extends React.Component {
       selectItem[7 - card].classList.add("selectCard");
     }
 
-    let select2 = document.getElementById("CardList").getElementsByClassName("value")
-    let target = select2[card - 1].value;
-    console.log(target);
-    let an_target = select2[(7 - card)].value;
-    console.log(an_target);
+    const array = this.state.check_cards;
+    let target = array[card - 1];
+    let an_target = array[7 - card];
+
     if(select_cards.indexOf(target) != '-1' && select_cards.indexOf(an_target) != '-1'){
       this.setState({result: '不正解です！'});
-    //  window.location.reload();
     }
   }
 
@@ -220,7 +218,7 @@ class CardList extends React.Component {
 
         <div id="CardList" className="card_list">
           <ul>
-            <CardSet cardClick={this.handleFunction} cardList={this.state.check_cards} />
+            <CardSet  cardClick={this.handleFunction} cardList={this.state.check_cards} />
           </ul>
         </div>
         <h2>{this.state.result}</h2>
