@@ -2,6 +2,8 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Modal from 'react-modal';
+import CardSet from './components/CardSet';
+import Reset from './components/Reset';
 
 const customStyles = {
   content : {
@@ -109,10 +111,11 @@ class CardList extends React.Component {
   }
 
   cardsReset = () => {
-    let cards = document.getElementById("CardList").getElementsByTagName("input");
+    let cards = document.getElementById("CardList").getElementsByClassName("cardslist");
     for(let i = 0; i < cards.length; i++){
       cards[i].disabled = false;
-      cards[i].className = "cards";
+      cards[i].classList.remove("selectCard");
+      cards[i].classList.add("cards");
       cards[i].src = "/images/tramp_back.png";
     }
   }
@@ -127,6 +130,7 @@ class CardList extends React.Component {
     }
     this.setState({ check_cards: array});
   }
+
 
   handleFunction = (card, index) => {
     this.changeImage(card, index);
@@ -154,38 +158,42 @@ class CardList extends React.Component {
   }
 
   cardBlock = (openedCard, card, index) => {
-    let selectItem = document.getElementById("CardList").getElementsByTagName("input");
+    let selectItem = document.getElementById("CardList").getElementsByClassName("cardslist");
     for(let i = 0; i < selectItem.length; i++){
       selectItem[i].disabled = true;
-      selectItem[i].className = "cards";
+      selectItem[i].classList.remove("selectCard");
+      selectItem[i].classList.add("cards");
     }
     let select_cards = openedCard;
     select_cards.push(card);
 
     if(card == 4) {
       selectItem[3].disabled = false;
-      selectItem[3].className = "selectCard";
+      selectItem[3].classList.remove("cards");
+      selectItem[3].classList.add("selectCard");
     } else {
       //left select
       selectItem[card - 1].disabled = false;
-      selectItem[card - 1].className = "selectCard";
+      selectItem[3].classList.remove("cards");
+      selectItem[card - 1].classList.add("selectCard");
 
       //right select
       selectItem[7 - card].disabled = false;
-      selectItem[7 - card].className = "selectCard";
+      selectItem[7 - card].classList.remove("cards");
+      selectItem[7 - card].classList.add("selectCard");
     }
 
+    const array = this.state.check_cards;
+    let target = array[card - 1];
+    let an_target = array[7 - card];
 
-    let target = selectItem[card - 1].value;
-    let an_target = selectItem[(7 - card)].value;
     if(select_cards.indexOf(target) != '-1' && select_cards.indexOf(an_target) != '-1'){
       this.setState({result: '不正解です！'});
-    //  window.location.reload();
     }
   }
 
   changeImage = (card, index) => {
-    let selectItem = document.getElementById("CardList").getElementsByTagName("input");
+    let selectItem = document.getElementById("CardList").getElementsByClassName("cardslist");
     selectItem[index].src = "/images/ace0" + card + ".gif";
   }
 
@@ -210,7 +218,7 @@ class CardList extends React.Component {
 
         <div id="CardList" className="card_list">
           <ul>
-            <CardSet cardClick={this.handleFunction} cardList={this.state.check_cards} />
+            <CardSet  cardClick={this.handleFunction} cardList={this.state.check_cards} />
           </ul>
         </div>
         <h2>{this.state.result}</h2>
@@ -218,38 +226,6 @@ class CardList extends React.Component {
       </div>
     );
   }
-}
-
-const CardSet = (props) => {
-
-  const card_li = props.cardList;
-  const rows = card_li.map((card,index) =>
-      <li key={card}>
-         <input type="image" src={process.env.PUBLIC_URL +'/images/tramp_back.png'} onClick={() => props.cardClick(card, index)} value={card} width="70" height="100" />
-      </li>
-  );
-  return (
-    rows
-  )
-}
-
-
-const Reset = (props) => {
-  pageScroll();
-  return(
-    <div className="reset-button-div">
-      <button onClick={props.stateReset} className="reset-button">
-        もう一度遊ぶ
-      </button>
-    <div id="header-line"></div>
-    </div>
-  );
-}
-
-const pageScroll = () => {
-  let a = document.documentElement;
-  const y = a.scrollHeight - a.clientHeight;
-  setTimeout(function() { window.scrollBy(0, y + 300); }, 1);
 }
 
 
