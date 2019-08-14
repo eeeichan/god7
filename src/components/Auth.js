@@ -32,6 +32,35 @@ export default class Auth extends Component {
     });
   }
 
+  handleFirestore = (result) => {
+  let citiesRef = firebaseDb.collection('users');
+  let query = citiesRef.where('uid', '==', result.user.uid).get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+        //Firestoreに新規登録
+        users.add({
+          "uid": result.user.uid,
+          "name": result.user.displayName,
+          "image": "",
+          "game": 0,
+          "streak": 0,
+          "win": 0,
+          "lose": 0,
+        });
+        return;
+      }
+  
+      snapshot.forEach(doc => {
+        console.log(doc.id, '=>', doc.data());
+        // Reduxに突っ込む処理
+      });
+    })
+    .catch(err => {
+      console.log('Error getting documents', err);
+    });
+  }
+
   handleClick(e) {
     e.preventDefault();
     const provider = new firebase.auth.TwitterAuthProvider();
@@ -40,15 +69,8 @@ export default class Auth extends Component {
           console.log(result);
           console.log("ログイン成功");
           this.setState({ displayName: result.user.displayName });
-            users.add({
-              "uid": result.user.uid,
-              "name": result.user.displayName,
-              "image": "",
-              "game": 0,
-              "streak": 0,
-              "win": 0,
-              "lose": 0,
-            });
+          this.handleFirestore(result);
+
         }).catch((error) => {
           console.log(error);
         });
