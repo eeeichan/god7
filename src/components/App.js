@@ -34,10 +34,9 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-      <div>
-        <AuthContainer />
-        <button onClick={this.handleClick}>store</button>
-      </div>
+        <div className="login-space">
+          <AuthContainer />
+        </div>
       </Provider>
     )
   }

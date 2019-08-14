@@ -39,13 +39,15 @@ function App() {
     <Provider store={store}>
       <div className="App">
         <header className="App-header">
-          <h1>オープン７</h1>
-          <p>オープン7とは...<br />
-          めくったカードの数字が次にめくれるカードの場所となる！<br />
-          最後までめくれたら勝利！！さあ、挑戦してみよう！</p>
-          <CardList />
           <Connect />
         </header>
+          <div className="App-contents">
+            <h1>オープン７</h1>
+            <p>オープン7とは...<br />
+            めくったカードの数字が次にめくれるカードの場所となる！<br />
+            最後までめくれたら勝利！！さあ、挑戦してみよう！</p>
+            <CardList />
+          </div>
       </div>
     </Provider>
   );

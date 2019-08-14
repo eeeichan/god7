@@ -52,7 +52,9 @@ export default class Auth extends Component {
       }
   
       snapshot.forEach(doc => {
-        console.log(doc.id, '=>', doc.data());
+        //console.log(doc.id, '=>', doc.data());
+        const users = doc.data();
+        console.log(users);
         // Reduxに突っ込む処理
       });
     })
@@ -87,7 +89,7 @@ export default class Auth extends Component {
     const userName = this.state.displayName;
     return(
       <div>
-        {userName == "" ? <button onClick={(e) => this.handleClick(e)}>Twitter Login</button> : <p>Player:{userName}<br /><button onClick={this.logout}>ログアウト</button></p>}
+        {userName == "" ? <button onClick={(e) => this.handleClick(e)}>Twitter<br />ログイン</button> : <p>Player:{userName}<br /><button onClick={this.logout}>ログアウト</button></p>}
       </div>
     )
   }
