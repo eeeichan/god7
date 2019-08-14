@@ -5,6 +5,7 @@ html, body {
 
 html {
   scroll-behavior: smooth;
+  background-color: #282c34;
 }
 
 .App {
@@ -16,8 +17,29 @@ html {
   height: 40vmin;
   pointer-events: none;
 }
-
 .App-header {
+  text-align: right;
+}
+.App-header .login-space {
+  margin: 20px;
+}
+.App-header .login-space p {
+  color: white;
+  font-family: initial;
+  font-weight: bolder;
+}
+.App-header .login-space button {
+  color: #ad7dd8;
+  background-color: #374663;
+  font-family: initial;
+  font-size: 15px;
+  font-weight: bolder;
+  border-radius: 10px;
+  border: solid 1px;
+  padding: 5px 20px;
+  margin-top: 5px;
+}
+.App-contents {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;

@@ -6,6 +6,16 @@ import CardSet from './components/CardSet';
 import Reset from './components/Reset';
 import Correct from './components/Correct';
 import Misstake from './components/Misstake';
+import Connect from './components/App';
+
+import { createStore } from 'redux';
+import { Provider, connect, ReactReduxContext } from 'react-redux';
+import rootReducer from './reducers/Auth';
+
+const store = createStore(
+  rootReducer
+);
+
 
 const customStyles = {
   content : {
@@ -24,17 +34,23 @@ const customStyles = {
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>オープン７</h1>
-        <p>オープン7とは...<br />
-        めくったカードの数字が次にめくれるカードの場所となる！<br />
-        最後までめくれたら勝利！！さあ、挑戦してみよう！</p>
-        <CardList />
-      </header>
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <header className="App-header">
+          <Connect />
+        </header>
+          <div className="App-contents">
+            <h1>オープン７</h1>
+            <p>オープン7とは...<br />
+            めくったカードの数字が次にめくれるカードの場所となる！<br />
+            最後までめくれたら勝利！！さあ、挑戦してみよう！</p>
+            <CardList />
+          </div>
+      </div>
+    </Provider>
   );
 }
+
 
 
 class CardList extends React.Component {
@@ -46,7 +62,7 @@ class CardList extends React.Component {
       select_card: [],
       check_cards: ['1','2','3','4','5','6','7'],
       result: '0',
-      modalIsOpen: false
+      modalIsOpen: false,
     }
 
     this.openModal = this.openModal.bind(this);
