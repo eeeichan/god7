@@ -5,6 +5,8 @@ import authcontainer from '../containers/AuthContainer';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import todoApp from '../reducers/Auth';
+import { data } from '../actions/Actions';
+
 
 const store = createStore(
   todoApp,
@@ -18,17 +20,20 @@ export default class Auth extends Component {
   constructor(props) {
     super(props)
     this.state = { 
-      displayName: "",
-      users: []
+      displayName: ""
     }
   }
 
   async componentDidMount() {
-    console.log(this.props);
+    //console.log(this.props);
     this.props.refLogin();
     firebase.auth().onAuthStateChanged(user => {
-      console.log("onAuth", user);
-      this.setState({ displayName: user.displayName });
+      //console.log("onAuth", user);
+      if (user) {
+        this.setState({ displayName: user.displayName });
+      } else {
+        this.setState({ displayName: "" });
+      }
     });
   }
 
@@ -54,8 +59,9 @@ export default class Auth extends Component {
       snapshot.forEach(doc => {
         //console.log(doc.id, '=>', doc.data());
         const users = doc.data();
-        console.log(users);
+        //console.log(users);
         // Reduxに突っ込む処理
+        this.props.doStateSet(users);
       });
     })
     .catch(err => {
@@ -63,26 +69,27 @@ export default class Auth extends Component {
     });
   }
 
-  handleClick(e) {
+
+  handleClick = (e) => {
     e.preventDefault();
     const provider = new firebase.auth.TwitterAuthProvider();
     firebase.auth().signInWithPopup(provider)
       .then((result) => {
-          console.log(result);
-          console.log("ログイン成功");
+          //console.log(result);
+          console.log("Login Done");
           this.setState({ displayName: result.user.displayName });
           this.handleFirestore(result);
-
         }).catch((error) => {
           console.log(error);
         });
   }
   logout = () => {
     firebase.auth().signOut().then(result => {
-      console.log(result);
+      //console.log(result);
+      console.log("Logout Done");
       this.setState({ displayName: "" });
     }).catch(error => {
-        console.log(error);
+      console.log(error);
     });
   }
   render() {

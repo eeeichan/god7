@@ -3,7 +3,7 @@ import firebase from 'firebase';
 import { connect } from 'react-redux';
 
 import Auth from '../components/Auth';
-import { loginOk } from '../actions/Actions';
+import { loginOk, data } from '../actions/Actions';
 
 
 const mapStateToProps = (state) => {
@@ -14,6 +14,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    doStateSet: (user) => {
+        dispatch(data(user))
+    },
     doLogin: () => {
       let provider = new firebase.auth.TwitterAuthProvider()
       firebase.auth().signInWithPopup(provider)

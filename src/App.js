@@ -16,8 +16,6 @@ const store = createStore(
   rootReducer
 );
 
-store.subscribe(() => console.log(store.getState().displayName));
-
 
 const customStyles = {
   content : {
@@ -57,8 +55,6 @@ function App() {
 
 class CardList extends React.Component {
   constructor(props){
-    
-store.subscribe(() => console.log("store subscribe .. " + store.getState().displayName));
     super(props);
     this.state = {
       card_check: '0',

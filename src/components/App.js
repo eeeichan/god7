@@ -20,24 +20,19 @@ export default class App extends Component {
   }
   
   componentDidMount = () => {
-    console.log("update..");
     //console.log("store.." + store.getState().displayName);
     //this.handleClick();
   }
 
   handleClick = () => {
     console.log(store.getState());
-    let userName = store.getState().displayName;
-    this.setState({ displayName: userName});
   }
 
   render() {
     return (
-      <Provider store={store}>
-        <div className="login-space">
-          <AuthContainer />
-        </div>
-      </Provider>
+      <div className="login-space">
+        <AuthContainer />
+      </div>
     )
   }
 }
