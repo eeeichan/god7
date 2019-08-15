@@ -17,18 +17,25 @@ html {
   height: 40vmin;
   pointer-events: none;
 }
-.App-header {
-  text-align: right;
+.App-header { color: white; }
+.App-header .header-menu{
+  /*text-align: right;*/
+  width: 100%;
+  display: -webkit-box;
+  margin-top: 20px;
 }
-.App-header .login-space {
-  margin: 20px;
+.App-header .header-menu h1 { 
+  margin-top: 0px;
+  font-family: 'Press Start 2P', cursive;
 }
-.App-header .login-space p {
-  color: white;
-  font-family: initial;
-  font-weight: bolder;
+.ranking-space, .logo-space, .login-space { width: 33%; }
+.App-header .header-menu .login-space {
+  /*margin: 20px;*/
 }
-.App-header .login-space button {
+
+.App-header .header-menu .ranking-space p { font-family: 'Kosugi Maru', sans-serif; }
+
+.App-header .header-menu .login-space button {
   color: #ad7dd8;
   background-color: #374663;
   font-family: initial;
@@ -37,8 +44,15 @@ html {
   border-radius: 10px;
   border: solid 1px;
   padding: 5px 20px;
-  margin-top: 5px;
+  margin-top: 15px;
 }
+.App-header .header-menu .login-space button { font-family: 'Kosugi Maru', sans-serif; }
+.App-header .header-menu .login-space button:hover {
+  color: #ffffff;
+  background-color: black;
+  transition: color .3s, text-decoration .3s;
+}
+
 .App-contents {
   background-color: #282c34;
   min-height: 100vh;
@@ -184,4 +198,15 @@ html{
   height: 130px;
   margin-bottom: 10px;
   border-radius:10px;
+}
+
+a {
+  color: rgb(151, 53, 241);
+  text-decoration: none;
+  font-family: 'Kosugi Maru', sans-serif;
+}
+
+a:hover {
+  color:#ffffff;
+  transition: color .3s, text-decoration .3s;
 }

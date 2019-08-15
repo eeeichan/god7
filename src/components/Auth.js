@@ -7,6 +7,7 @@ import { createStore } from 'redux';
 import todoApp from '../reducers/Auth';
 import { data } from '../actions/Actions';
 
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 const store = createStore(
   todoApp,
@@ -96,7 +97,8 @@ export default class Auth extends Component {
     const userName = this.state.displayName;
     return(
       <div>
-        {userName == "" ? <button onClick={(e) => this.handleClick(e)}>Twitter<br />ログイン</button> : <p>Player:{userName}<br /><button onClick={this.logout}>ログアウト</button></p>}
+        {userName == "" ? 
+          <button onClick={(e) => this.handleClick(e)}>Twitter<br />ログイン</button> : <p><Link to="/mypage/">Player:{userName}</Link><br /><button onClick={this.logout}>ログアウト</button></p>}
       </div>
     )
   }

@@ -12,6 +12,11 @@ import { createStore } from 'redux';
 import { Provider, connect, ReactReduxContext } from 'react-redux';
 import rootReducer from './reducers/Auth';
 
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import MyPage from './components/MyPage';
+import Ranking from './components/Ranking';
+
+
 const store = createStore(
   rootReducer
 );
@@ -34,23 +39,34 @@ const customStyles = {
 
 function App() {
   return (
-    <Provider store={store}>
-      <div className="App">
-        <header className="App-header">
-          <Connect />
-        </header>
-          <div className="App-contents">
-            <h1>オープン７</h1>
-            <p>オープン7とは...<br />
-            めくったカードの数字が次にめくれるカードの場所となる！<br />
-            最後までめくれたら勝利！！さあ、挑戦してみよう！</p>
-            <CardList />
-          </div>
-      </div>
-    </Provider>
+    <Router>
+      <Provider store={store}>
+        <div className="App">
+          <header className="App-header">
+            <Connect />
+          </header>
+          <Route exact path="/" component={MainContents} />
+          <Route path="/mypage" component={MyPage} />
+          <Route path="/ranking" component={Ranking} />
+        </div>
+      </Provider>
+    </Router>
   );
 }
 
+class MainContents extends React.Component {
+  render(){
+    return(
+      
+            <div className="App-contents">
+              <p>オープン7とは...<br />
+              めくったカードの数字が次にめくれるカードの場所となる！<br />
+              最後までめくれたら勝利！！さあ、挑戦してみよう！</p>
+              <CardList />
+            </div>
+    );
+  }
+}
 
 
 class CardList extends React.Component {
