@@ -20,7 +20,7 @@ export default class App extends Component {
     this.state = {
       displayName: ""
     }
-    console.log(this.props.match);
+    console.log("com App props",this.props);
   }
   
   componentDidMount = () => {

@@ -210,3 +210,19 @@ a:hover {
   color:#ffffff;
   transition: color .3s, text-decoration .3s;
 }
+
+.mypage {
+  padding: 50px;
+  color: white;
+  font-size: 20px;
+}
+.mypage .mypage-top {
+  display: box;
+}
+.mypage h3 {
+  font-family: 'Kosugi Maru', sans-serif;
+}
+
+.mypage li {
+  font-family: fantasy;
+}

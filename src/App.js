@@ -16,6 +16,12 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import MyPage from './components/MyPage';
 import Ranking from './components/Ranking';
 
+import firebase from 'firebase';
+import { firebaseDb } from './firebase/index';
+import authcontainer from './containers/AuthContainer';
+
+
+const users = firebaseDb.collection('users');
 
 const store = createStore(
   rootReducer
@@ -36,6 +42,13 @@ const customStyles = {
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
 //Modal.setAppElement('#App')
 
+//Store 状態確認
+store.subscribe(() => {
+  console.log("App.js Store Check",store.getState());
+});
+
+
+
 
 function App() {
   return (
@@ -46,7 +59,8 @@ function App() {
             <Connect />
           </header>
           <Route exact path="/" component={MainContents} />
-          <Route path="/mypage" component={MyPage} />
+          <Route path="/mypage"
+            render={() => <MyPage data={store.getState()} /> } />
           <Route path="/ranking" component={Ranking} />
         </div>
       </Provider>
@@ -55,15 +69,19 @@ function App() {
 }
 
 class MainContents extends React.Component {
+  constructor(props){
+    super(props);
+    console.log("MainContents store", store.getState());
+  console.log("MainContents props",this.props);
+  }
   render(){
     return(
-      
-            <div className="App-contents">
-              <p>オープン7とは...<br />
-              めくったカードの数字が次にめくれるカードの場所となる！<br />
-              最後までめくれたら勝利！！さあ、挑戦してみよう！</p>
-              <CardList />
-            </div>
+      <div className="App-contents">
+        <p>オープン7とは...<br />
+        めくったカードの数字が次にめくれるカードの場所となる！<br />
+        最後までめくれたら勝利！！さあ、挑戦してみよう！</p>
+        <CardList data={this.props}/>
+      </div>
     );
   }
 }
@@ -71,6 +89,10 @@ class MainContents extends React.Component {
 
 class CardList extends React.Component {
   constructor(props){
+    let uid = store.getState().uid;
+    if (!uid) {
+      let uid = "";
+    }
     super(props);
     this.state = {
       card_check: '0',
@@ -79,7 +101,9 @@ class CardList extends React.Component {
       check_cards: ['1','2','3','4','5','6','7'],
       result: '0',
       modalIsOpen: false,
+      uid: uid
     }
+    console.log("CardList props",this.props);
 
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -184,11 +208,15 @@ class CardList extends React.Component {
   openCheck = (card, index) => {
     let openedCard = this.state.select_card
     if(openedCard.length == 6 && openedCard.indexOf(card) == '-1') {
+      //正解
       this.setState({result: '1'});
+      this.AddFirestore("1");
       this.cardsAllBlock();
       this.openModal();
     }else if(openedCard.indexOf(card) != '-1') {
-      this.setState({result: '2'})
+      //不正解
+      this.setState({result: '2'});
+      this.AddFirestore("2");
       this.cardsAllBlock();
       this.openModal();
     }else{
@@ -227,7 +255,9 @@ class CardList extends React.Component {
     let an_target = array[7 - card];
 
     if(select_cards.indexOf(target) != '-1' && select_cards.indexOf(an_target) != '-1'){
+      //不正解
       this.setState({result: '2'});
+      this.AddFirestore("2");
       this.cardsAllBlock();
       this.openModal();
     }
@@ -244,6 +274,45 @@ class CardList extends React.Component {
       selectItem[i].disabled = true;
       selectItem[i].classList.remove("selectCard");
       selectItem[i].classList.add("cards");
+    }
+  }
+
+  AddFirestore = (result) => {
+    let uid = this.state.uid;
+    console.log("uid",uid);
+    console.log("AddFirestore...");
+    if (uid != "" && uid != null) {
+      console.log("AddFirestore res",result)
+      let citiesRef = firebaseDb.collection('users');
+      let query = citiesRef.where('uid', '==', uid).get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            console.log("doc", doc);
+            console.log("doc id", doc.id);
+            const user = doc.data();
+            console.log("doc data", user);
+
+            const game = user.game;
+            const win = user.win;
+            const lose = user.lose;
+
+            users.doc(doc.id).set({
+              game: game + 1
+            }, {merge: true});
+            if (result == "1") {
+              users.doc(doc.id).set({
+                win: win + 1
+              }, {merge: true});
+            } else if (result == "2") {
+              users.doc(doc.id).set({
+                lose: lose + 1
+              }, {merge: true});
+            }
+          });
+        })
+      .catch(err => {
+        console.log('Error getting documents',err);
+      })
     }
   }
 

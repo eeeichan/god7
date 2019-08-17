@@ -9,10 +9,10 @@ import { data } from '../actions/Actions';
 
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-const store = createStore(
-  todoApp,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+//const store = createStore(
+//  todoApp,
+//  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+//);
 
 const users = firebaseDb.collection('users');
 
@@ -23,6 +23,7 @@ export default class Auth extends Component {
     this.state = { 
       displayName: ""
     }
+    console.log("com Auth props",this.props);
   }
 
   async componentDidMount() {
