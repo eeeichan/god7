@@ -20,7 +20,6 @@ phases:
   pre_build:
     commands:
       - echo Installing source NPM dependencies...
-      - yarn upgrade firebase@5.11.1
       - yarn install
   build:
     commands:
