@@ -20,7 +20,6 @@ export default class App extends Component {
     this.state = {
       displayName: ""
     }
-    console.log("com App props",this.props);
   }
   
   componentDidMount = () => {
@@ -29,7 +28,7 @@ export default class App extends Component {
   }
 
   handleClick = () => {
-    console.log(store.getState());
+    // console.log(store.getState());
   }
 
   render() {

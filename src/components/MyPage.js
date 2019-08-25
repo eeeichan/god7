@@ -27,7 +27,6 @@ export default class MyPage extends React.Component {
       win: "",
       lose: ""
     }
-    console.log("MyPage props",this.props);
   }
 
   componentWillMount() {
@@ -36,14 +35,12 @@ export default class MyPage extends React.Component {
 
 
   firebaseGetData = (userId) => {
-    console.log("userId",userId);
     let citiesRef = firebaseDb.collection('users');
     let query = citiesRef.where('uid', '==', userId).get()
       .then(snapshot => {
         snapshot.forEach(doc => {
           const users = doc.data();
           //this.props.doStateSet(users);
-          console.log(users);
           this.firestoreDataSet(users);
         });
       })
@@ -53,7 +50,6 @@ export default class MyPage extends React.Component {
   }
 
   firestoreDataSet = (users) => {
-    console.log("firestoreDataSet users",users);
       this.setState({
         name: users.name,
         uid: users.uid,
@@ -63,11 +59,8 @@ export default class MyPage extends React.Component {
         win: users.win,
         lose: users.lose
       });
-    console.log(users.name);
-    console.log(users.image)
     this.setState({displayName: users.name});
     this.setState({image: users.image});
-    console.log("state", this.state.name)
   }
 
   //console.log("mypage uid",uid);
