@@ -1,20 +1,40 @@
-import React from 'react';
-
-import App from '../components/App';
-
+import * as React from 'react';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 
+import Auth from '../components/Auth';
+import { loginOk, data } from '../actions/Actions';
+
+
 const mapStateToProps = (state) => {
-  console.log("AppContainer )" + state.auth.uid)
   return {
-    uid: state.auth.uid,
-    displayName: state.auth.displayName,
+    isAuth: state.isAuth
   }
 }
 
-const AppContainer = connect(
-  mapStateToProps
-)(App)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    doStateSet: (user) => {
+        dispatch(data(user))
+    },
+    doLogin: () => {
+      let provider = new firebase.auth.TwitterAuthProvider()
+      firebase.auth().signInWithPopup(provider)
+    },
+    refLogin: () => {
+      firebase.auth().onAuthStateChanged(user => {
+        if (!user) {
+          return
+        }
+        dispatch(loginOk(user))
+      })
+    }
+  }
+}
 
-export default AppContainer
+const AuthContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Auth)
+
+export default AuthContainer

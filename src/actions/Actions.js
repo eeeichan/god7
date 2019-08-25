@@ -2,6 +2,7 @@ export const DATA = 'DATA';
 export const LOGIN_OK = 'LOGIN_OK';
 export const LOGOUT = 'LOGOUT';
 
+
 export const data = (user) => {
   return {
     type: DATA,

@@ -1,17 +1,8 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import {firebaseDb} from '../firebase/index';
-import authcontainer from '../containers/AuthContainer';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import todoApp from '../reducers/Auth';
-import { data } from '../actions/Actions';
 
-
-const store = createStore(
-  todoApp,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 const users = firebaseDb.collection('users');
 
@@ -44,10 +35,12 @@ export default class Auth extends Component {
       if (snapshot.empty) {
         console.log('No matching documents.');
         //Firestoreに新規登録
+        console.log("result", result);
+        console.log("snap",snapshot);
         users.add({
           "uid": result.user.uid,
           "name": result.user.displayName,
-          "image": "",
+          "image": result.user.photoURL,
           "game": 0,
           "streak": 0,
           "win": 0,
@@ -96,7 +89,8 @@ export default class Auth extends Component {
     const userName = this.state.displayName;
     return(
       <div>
-        {userName == "" ? <button onClick={(e) => this.handleClick(e)}>Twitter<br />ログイン</button> : <p>Player:{userName}<br /><button onClick={this.logout}>ログアウト</button></p>}
+        {userName == "" ? 
+          <button onClick={(e) => this.handleClick(e)}>Twitter<br />ログイン</button> : <p><Link to="/mypage/">Player:{userName}</Link><br /><button onClick={this.logout}>ログアウト</button></p>}
       </div>
     )
   }
